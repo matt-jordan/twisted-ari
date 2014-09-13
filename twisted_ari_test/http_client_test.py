@@ -1,18 +1,20 @@
 #!/usr/bin/env python
-
-#
-# Copyright (c) 2013, Digium, Inc.
-#
-
 """HTTP client tests
+Copyright (c) 2014, Matthew Jordan
+Matthew Jordan <mjordan@digium.com>
+
+This program is free software, distributed under the terms of
+the MIT License (MIT)
 """
 
 import unittest
 
 from base64 import b64encode
 
+from zope.interface import implements
+
 from twisted_ari.http_client import Request, BasicAuthenticator, ApiKeyAuthenticator, \
-    ARIWebSocketClientProtocol
+    ARIWebSocketClientProtocol, IARIEventReceiver
 
 class RequestTest(unittest.TestCase):
     """Basic tests for the Request object
@@ -79,6 +81,7 @@ class ARIWebSocketClientProtocolTest(unittest.TestCase):
     """
 
     class MockReceiver(object):
+        implements(IARIEventReceiver)
 
         def __init__(self):
             self.opens = 0
